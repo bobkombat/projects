@@ -1,6 +1,50 @@
 // Write your types here! ✨
+type BaseCurrent = {
+	name: string;
+	proximity: number;
+	treasure?: string;
+} & Current;
 
-let current = {
+type ThroughCurrent = {
+	through: BaseCurrent;
+	shortcut?: BaseCurrent;
+	type: "path";
+};
+
+type ClearingCurrent = {
+	through?: BaseCurrent;
+	type: "clearing";
+};
+
+type UpstreamCurrent = {
+	upstream: BaseCurrent;
+	area: "end";
+};
+
+type DownstreamCurrent = {
+	downstream: BaseCurrent;
+	area: "begin";
+};
+
+type MiddleCurrent = {
+	downstream: BaseCurrent;
+	upstream: BaseCurrent;
+	area: "middle";
+};
+
+type StreamCurrent = (UpstreamCurrent | DownstreamCurrent | MiddleCurrent) & {
+	type: "stream";
+};
+
+type AroundCurrent = {
+	around?: BaseCurrent;
+	through?: BaseCurrent;
+	type: "town";
+};
+
+type Current = ThroughCurrent | ClearingCurrent | StreamCurrent | AroundCurrent;
+
+let current: BaseCurrent | undefined = {
 	name: "Woesong Bridge",
 	proximity: 100,
 	through: {
